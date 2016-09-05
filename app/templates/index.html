@@ -1,6 +1,7 @@
 
 <h1>Awesome Flask Todo</h1>
 
+<div>
 <table class="table">
     <thead>
         <tr>
@@ -19,3 +20,13 @@
     {% endfor %}
     </tbody>
 </table>
+</div>
+
+<div>
+<form class="input-group" action="/add" method="post">
+    <input class="form-control" id="content" name="content" type="text" value="">
+    <span class="input-group-btn">
+         <button class="btn btn-primary" type="submit">Add</button>
+    </span>
+</form>
+</div>
