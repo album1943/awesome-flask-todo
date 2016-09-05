@@ -1,35 +1,53 @@
+<!DOCTYPE html>
+<script src="http://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+<link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+<script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
 
 <h1>Awesome Flask Todo</h1>
 
-<div>
+<div class="col-xs-8">
+<h2>Todo List</h2>
+{% if todos %}
     <table class="table">
-        <thead>
-            <tr>
-                <td>Content</td>
-                <td>Time</td>
-                <td>Operation</td>
-            </tr>
-        </thead>
-        <tbody>
-        {% for t in todos %}
+    <thead>
         <tr>
-            <td>{{ t.content }}</td>
-            <td>{{ t.time }}</td>
-            <td>
-            {% if t.status == 0 %}
-             <a href="/done/{{ t.id }}" class="btn btn-primary">Done</a>
-            {% else %}
-             <a href="/undone/{{ t.id }}" class="btn btn-primary">Undone</a>
-            {% endif %}
-            <a href="/delete/{{ t.id }}" class="btn btn-danger">Delete</a>
-            </td>
+            <th>content</td>
+            <th>time</td>
+            <th>operation</td>
         </tr>
+    </thead>
+    <tbody>
+     {% for t in todos %}
+        {% if t.status == 0 %}
+            <tr class="info">
+                <td>{{ t.content }}</td>
+                <td>{{ t.time.strftime('%H:%M %d-%m-%Y') }}</td>
+                <td>
+                    <a href="/done/{{ t.id }}" class="btn btn-primary">Done</a>
+                    <a href="/delete/{{ t.id }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+         {% else %}
+              <tr class="danger">
+                <td id="center" >{{ t.content }}</td>
+                <td>{{ t.time.strftime('%H:%M %d-%m-%Y') }}</td>
+                <td>
+                    <a href="/undone/{{ t.id }}" class="btn btn-primary">Undone</a>
+                    <a href="/delete/{{ t.id }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+
+         {% endif %}
         {% endfor %}
-        </tbody>
+    </tbody>
     </table>
+{% else %}
+    <h3 class="text-info">No todos,pelease add</h3>
+{% endif %}
 </div>
 
-<div>
+<div class="col-xs-6">
+    <h2>Add a new todo</h2>
     <form class="input-group" action="/add" method="post">
         {{ form.hidden_tag() }}
         {{ form.content(class="form-control") }}
